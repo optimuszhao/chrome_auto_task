@@ -1,0 +1,27 @@
+name: "Mock 导出报表"
+description: "用于验证下载文件能力"
+browser:
+  headless: true
+  slow_mo: 100
+  storage_state: ""
+variables:
+  username: "admin"
+  password: "123456"
+steps:
+  - action: goto
+    url: "http://127.0.0.1:8000/mock-site"
+  - action: fill
+    selector: "#username"
+    value: "${username}"
+  - action: fill
+    selector: "#password"
+    value: "${password}"
+  - action: click
+    selector: "#loginBtn"
+  - action: wait
+    selector: "#dashboard"
+  - action: download
+    selector: "#exportBtn"
+    save_as: "logs/downloads/mock-report.txt"
+  - action: assert_text
+    text: "导出成功"

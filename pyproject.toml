@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+  "e2e: Playwright browser tests"
+]
+
+[tool.ruff]
+line-length = 120

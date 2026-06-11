@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <h1>Dashboard</h1>
+    <p>管理任务、执行记录、定时计划和 Mock 验证流程。</p>
+  </div>
+  <div class="actions">
+    <a class="button primary" href="/flows/new">新建自动化任务</a>
+    <a class="button" href="/mock-site">Mock 测试站点</a>
+  </div>
+</section>
+
+<section class="metric-grid">
+  <div class="metric"><span>任务总数</span><strong>{{ flow_count }}</strong></div>
+  <div class="metric"><span>今日执行</span><strong>{{ runs_today }}</strong></div>
+  <div class="metric"><span>成功次数</span><strong>{{ success_count }}</strong></div>
+  <div class="metric"><span>失败次数</span><strong>{{ failed_count }}</strong></div>
+</section>
+
+<section class="panel">
+  <h2>正在执行</h2>
+  {% if running %}
+    <table>
+      <thead><tr><th>Run ID</th><th>任务</th><th>状态</th><th>当前步骤</th><th>操作</th></tr></thead>
+      <tbody>
+      {% for run in running %}
+        <tr><td>{{ run.id }}</td><td>{{ run.flow.name }}</td><td><span class="badge">{{ run.status }}</span></td><td>{{ run.current_step_index }}</td><td><a href="/runs/{{ run.id }}">查看</a></td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="empty">当前没有运行中的任务。</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2>最近 10 条执行记录</h2>
+  <table>
+    <thead><tr><th>Run ID</th><th>任务</th><th>触发</th><th>状态</th><th>耗时</th><th>创建时间</th><th></th></tr></thead>
+    <tbody>
+    {% for run in recent_runs %}
+      <tr>
+        <td>{{ run.id }}</td><td>{{ run.flow.name }}</td><td>{{ run.trigger_type }}</td><td><span class="badge {{ run.status|lower }}">{{ run.status }}</span></td>
+        <td>{{ run.duration_ms or "" }}</td><td>{{ run.created_at }}</td><td><a href="/runs/{{ run.id }}">详情</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

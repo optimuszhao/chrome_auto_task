@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}执行详情{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><h1>Run #{{ run.id }}</h1><p>{{ run.flow.name }} · {{ run.trigger_type }}</p></div>
+  {% if run.status == "WAITING_CONFIRM" %}
+  <div class="actions"><button class="primary" data-continue-run="{{ run.id }}">继续执行</button><button class="danger" data-cancel-run="{{ run.id }}">取消执行</button></div>
+  {% endif %}
+</section>
+<section class="metric-grid">
+  <div class="metric"><span>状态</span><strong>{{ run.status }}</strong></div>
+  <div class="metric"><span>开始</span><strong>{{ run.started_at or "" }}</strong></div>
+  <div class="metric"><span>结束</span><strong>{{ run.ended_at or "" }}</strong></div>
+  <div class="metric"><span>耗时 ms</span><strong>{{ run.duration_ms or "" }}</strong></div>
+</section>
+{% if run.error_message %}<p class="alert">{{ run.error_message }}</p>{% endif %}
+<section class="panel">
+  <h2>步骤日志</h2>
+  <table>
+    <thead><tr><th>#</th><th>Action</th><th>说明</th><th>状态</th><th>耗时</th><th>输入快照</th><th>截图</th><th>错误</th></tr></thead>
+    <tbody>
+    {% for log in run.step_logs %}
+      <tr>
+        <td>{{ log.step_index }}</td><td>{{ log.action }}</td><td>{{ log.description }}</td><td>{{ log.status }}</td><td>{{ log.duration_ms }}</td>
+        <td><code>{{ log.input_snapshot }}</code></td>
+        <td>{% if log.screenshot_path %}<a href="/files/{{ log.screenshot_path }}" target="_blank">查看</a>{% endif %}</td>
+        <td>{{ log.error_message or "" }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

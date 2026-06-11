@@ -1,0 +1,37 @@
+name: "Mock 登录并提交表单"
+description: "用于验证浏览器自动化平台的测试流程"
+browser:
+  headless: true
+  slow_mo: 100
+  storage_state: ""
+variables:
+  username: "admin"
+  password: "123456"
+  title: "自动化测试标题"
+steps:
+  - action: goto
+    url: "http://127.0.0.1:8000/mock-site"
+  - action: fill
+    selector: "#username"
+    value: "${username}"
+  - action: fill
+    selector: "#password"
+    value: "${password}"
+  - action: click
+    selector: "#loginBtn"
+  - action: wait
+    selector: "#dashboard"
+  - action: click
+    selector: "#openFormBtn"
+  - action: fill
+    selector: "#title"
+    value: "${title}"
+  - action: select
+    selector: "#level"
+    value: "high"
+  - action: screenshot
+    path: "logs/mock-before-submit.png"
+  - action: click
+    selector: "#submitBtn"
+  - action: assert_text
+    text: "提交成功"

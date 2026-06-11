@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}任务列表{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><h1>任务列表</h1><p>创建、编辑、执行和删除自动化任务。</p></div>
+  <a class="button primary" href="/flows/new">新建任务</a>
+</section>
+<section class="panel">
+  <table>
+    <thead><tr><th>名称</th><th>说明</th><th>启用</th><th>最近执行</th><th>状态</th><th>操作</th></tr></thead>
+    <tbody>
+    {% for flow in flows %}
+      {% set last = recent.get(flow.id) %}
+      <tr>
+        <td>{{ flow.name }}</td>
+        <td>{{ flow.description }}</td>
+        <td>{{ "是" if flow.enabled else "否" }}</td>
+        <td>{{ last.created_at if last else "" }}</td>
+        <td>{{ last.status if last else "" }}</td>
+        <td class="row-actions">
+          <a href="/flows/{{ flow.id }}/edit">编辑</a>
+          <button data-run-flow="{{ flow.id }}">执行</button>
+          {% if last %}<a href="/runs/{{ last.id }}">日志</a>{% endif %}
+          <button class="danger" data-delete-flow="{{ flow.id }}">删除</button>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

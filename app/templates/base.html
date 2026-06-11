@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}内网浏览器自动化编排平台{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">自动化编排平台</a>
+    <nav>
+      <a href="/">Dashboard</a>
+      <a href="/flows">任务</a>
+      <a href="/schedules">定时计划</a>
+      <a href="/tutorial">教程</a>
+      <a href="/mock-site">Mock 站点</a>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <script src="/static/js/app.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

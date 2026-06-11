@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}任务编辑器{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><h1>{{ "编辑任务" if flow else "新建任务" }}</h1><p>使用表单或 YAML 配置浏览器自动化流程。</p></div>
+  <div class="actions">
+    <button class="primary" id="saveFlowBtn">保存</button>
+    <button id="runFlowBtn" {% if not flow %}disabled{% endif %}>手动执行</button>
+  </div>
+</section>
+<input type="hidden" id="flowId" value="{{ flow.id if flow else '' }}">
+<section class="editor-grid">
+  <aside class="panel step-panel">
+    <div class="split-head"><h2>步骤</h2><button id="addStepBtn">添加</button></div>
+    <ol id="stepList" class="step-list"></ol>
+  </aside>
+  <section class="panel">
+    <div class="split-head">
+      <h2>步骤配置</h2>
+      <div>
+        <button id="moveUpBtn">上移</button>
+        <button id="moveDownBtn">下移</button>
+        <button class="danger" id="deleteStepBtn">删除</button>
+      </div>
+    </div>
+    <div class="form-grid">
+      <label>任务名称<input id="flowName" value="{{ flow.name if flow else '' }}"></label>
+      <label>任务说明<input id="flowDescription" value="{{ flow.description if flow else '' }}"></label>
+      <label>启用<select id="flowEnabled"><option value="true">是</option><option value="false" {% if flow and not flow.enabled %}selected{% endif %}>否</option></select></label>
+      <label>storage_state<select id="storageState"><option value="">空</option>{% for item in auth_files %}<option>{{ item }}</option>{% endfor %}</select></label>
+      <label>Action<select id="stepAction"></select></label>
+      <label>selector<input id="stepSelector"></label>
+      <label>value<input id="stepValue"></label>
+      <label>url<input id="stepUrl"></label>
+      <label>timeout<input id="stepTimeout" type="number"></label>
+      <label>path<input id="stepPath"></label>
+      <label>message<input id="stepMessage"></label>
+      <label>text<input id="stepText"></label>
+      <label>seconds<input id="stepSeconds" type="number" step="0.1"></label>
+      <label>file_path<input id="stepFilePath"></label>
+      <label>save_as<input id="stepSaveAs"></label>
+      <label class="wide">description<input id="stepDescription"></label>
+    </div>
+  </section>
+</section>
+<section class="panel yaml-panel">
+  <div class="split-head">
+    <h2>YAML 编辑模式</h2>
+    <div class="actions">
+      <button id="validateYamlBtn">YAML 校验</button>
+      <button id="formatYamlBtn">格式化</button>
+      <button id="formToYamlBtn">从表单生成 YAML</button>
+      <button id="yamlToFormBtn">从 YAML 回填表单</button>
+    </div>
+  </div>
+  <textarea id="yamlContent" spellcheck="false">{{ flow.yaml_content if flow else "" }}</textarea>
+  <p id="editorMessage" class="message"></p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+<script src="/static/js/flow_editor.js"></script>
+{% endblock %}

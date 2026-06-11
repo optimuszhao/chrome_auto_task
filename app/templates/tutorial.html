@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}使用教程{% endblock %}
+{% block content %}
+<article class="doc">
+  <h1>内网浏览器自动化编排平台使用教程</h1>
+  <h2>1. 这个平台能做什么</h2><p>它通过 Playwright 打开 Chromium，按你配置的步骤访问内网页面、点击、填写表单、等待元素、截图、下载文件，并记录每一步日志。</p>
+  <h2>2. 推荐使用场景</h2><p>适合低风险、重复性强、规则稳定的内部后台操作，例如日报导出、状态检查、批量查询和表单预填。</p>
+  <h2>3. 高风险场景</h2><p>删除、审批、资金、批量修改和对外发送动作需要加入 manual_confirm，并由人工在页面确认后继续。</p>
+  <h2>4. 创建第一个任务</h2><p>进入任务列表，点击新建任务，添加 goto、fill、click、assert_text 等步骤，保存后手动执行。</p>
+  <h2>5. 如何选择 selector</h2><p>优先使用 id，其次使用 data-testid、name、placeholder 和按钮文字。内网页面可让开发同事增加 data-testid。Chrome DevTools 可右键元素复制 selector，Playwright codegen 可录制操作。</p>
+  <h2>6. 常见 action 配置说明</h2><p>goto 打开页面，click 点击元素，fill 填写输入框，wait 等待元素出现，screenshot 保存截图，download 点击并保存下载文件，assert_text 校验页面文字。</p>
+  <h2>7. 如何处理登录态</h2><p>运行 scripts/save_auth_state.py 打开登录页，手动完成登录后回车保存，YAML 的 browser.storage_state 引用保存的 json 文件名。</p>
+  <h2>8. 如何配置定时执行</h2><p>进入定时计划，选择任务和类型。interval 用秒数，cron 使用 5 段表达式，date 使用一次性执行时间。</p>
+  <h2>9. 如何查看日志和截图</h2><p>Dashboard 和任务列表都能进入 Run 详情页，步骤表格展示输入快照、耗时、错误和截图链接。</p>
+  <h2>10. 常见错误排查</h2><p>selector 超时通常表示页面元素变化、登录失效或等待时间偏短。下载失败通常与按钮 selector 或浏览器拦截有关。</p>
+  <h2>11. 最佳实践</h2><p>密码放环境变量，登录态文件加入 .gitignore。每个任务先在 Mock 页面测试通过，定时任务先低频验证，页面变化后及时更新 selector。</p>
+</article>
+{% endblock %}

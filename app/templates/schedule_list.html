@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}定时计划{% endblock %}
+{% block content %}
+<section class="page-head"><div><h1>定时计划</h1><p>配置 cron、interval 和 date 触发任务。</p></div></section>
+<section class="panel">
+  <h2>新建计划</h2>
+  <form id="scheduleForm" class="form-grid">
+    <label>名称<input name="name" required></label>
+    <label>任务<select name="flow_id">{% for flow in flows %}<option value="{{ flow.id }}">{{ flow.name }}</option>{% endfor %}</select></label>
+    <label>类型<select name="schedule_type"><option>interval</option><option>cron</option><option>date</option></select></label>
+    <label>cron 表达式<input name="cron_expr" placeholder="*/5 * * * *"></label>
+    <label>interval 秒<input name="interval_seconds" type="number" value="60"></label>
+    <label>run_at<input name="run_at" type="datetime-local"></label>
+    <label>启用<select name="enabled"><option value="true">是</option><option value="false">否</option></select></label>
+    <button class="primary" type="submit">保存计划</button>
+  </form>
+</section>
+<section class="panel">
+  <h2>计划列表</h2>
+  <table>
+    <thead><tr><th>名称</th><th>任务</th><th>类型</th><th>启用</th><th>下次执行</th><th>操作</th></tr></thead>
+    <tbody>
+    {% for item in schedules %}
+      <tr>
+        <td>{{ item.name }}</td><td>{{ item.flow.name }}</td><td>{{ item.schedule_type }}</td><td>{{ "是" if item.enabled else "否" }}</td><td>{{ item.next_run_time or "" }}</td>
+        <td><button data-enable-schedule="{{ item.id }}">启用</button><button data-disable-schedule="{{ item.id }}">停用</button><button class="danger" data-delete-schedule="{{ item.id }}">删除</button></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
