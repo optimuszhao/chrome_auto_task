@@ -69,6 +69,11 @@ uvicorn app.main:app --reload
 ## 运行 Mock 示例
 示例文件位于 `flows/examples/`。可以把 `mock_login_and_submit.yaml` 内容粘贴到 YAML 编辑器保存，也可以通过 API 创建任务。
 
+## Google Maps 示例
+`flows/examples/google_search_maps_kunming_navigation.yaml` 按完整链路编排：打开 Google、搜索 google map、进入 Google Maps、搜索昆明、点击路线。Google 搜索可能触发风控，流程中加入了 `manual_confirm`，方便人工完成验证或确认结果页后继续。
+
+`flows/examples/google_maps_kunming_navigation_direct.yaml` 直接打开 Google Maps 搜索昆明并点击路线，已用平台 runner 实测通过，截图保存到 `logs/google-maps-kunming-direct.png`。
+
 ## 配置定时任务
 进入 `/schedules`，选择任务和调度类型：
 - interval：填写 `interval_seconds`

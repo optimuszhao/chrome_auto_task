@@ -1,0 +1,67 @@
+name: "Google 搜索 Maps 并创建昆明导航"
+description: "打开 Google，搜索 google map，进入 Google Maps，搜索昆明并创建导航。Google 搜索可能触发风控，已加入人工确认步骤。"
+browser:
+  headless: false
+  slow_mo: 300
+  storage_state: ""
+variables:
+  google_url: "https://www.google.com"
+  search_keyword: "google map"
+  destination: "昆明"
+steps:
+  - action: goto
+    description: "打开 Google 首页"
+    url: "${google_url}"
+    timeout: 30000
+
+  - action: fill
+    description: "在 Google 搜索框输入 google map"
+    selector: "textarea[name='q']"
+    value: "${search_keyword}"
+    timeout: 15000
+
+  - action: click
+    description: "点击 Google 搜索按钮"
+    selector: "input[name='btnK']"
+    index: 0
+    timeout: 10000
+
+  - action: manual_confirm
+    description: "处理 Google 风控或确认搜索结果"
+    message: "如果出现 Google 验证页，请手动完成验证；如果搜索结果页已打开，确认第一个 Google Maps 结果可点击后继续。"
+
+  - action: click
+    description: "点击第一个 Google Maps 搜索结果"
+    selector: "a[href*='/maps']"
+    index: 0
+    timeout: 20000
+
+  - action: wait
+    description: "等待 Google Maps 搜索框出现"
+    selector: "input[role='combobox']"
+    timeout: 30000
+
+  - action: fill
+    description: "在 Google Maps 输入昆明"
+    selector: "input[role='combobox']"
+    value: "${destination}"
+    timeout: 15000
+
+  - action: click
+    description: "点击 Google Maps 搜索按钮"
+    selector: "button[aria-label='搜索']"
+    timeout: 15000
+
+  - action: sleep
+    description: "等待搜索结果加载"
+    seconds: 5
+
+  - action: click
+    description: "点击路线，创建到昆明的导航"
+    selector: "button[aria-label='路线']"
+    index: 0
+    timeout: 15000
+
+  - action: screenshot
+    description: "保存导航结果截图"
+    path: "logs/google-maps-kunming-navigation.png"

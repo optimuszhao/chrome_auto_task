@@ -20,10 +20,14 @@ def resolve_project_path(path_value: str | None, fallback: str) -> Path:
 async def execute_action(page: Page, step: dict[str, Any], run_id: int, step_index: int) -> str | None:
     action = step["action"]
     timeout = int(step.get("timeout", 10000))
+    index = step.get("index")
     if action == "goto":
         await page.goto(str(step["url"]), wait_until="domcontentloaded", timeout=timeout)
     elif action == "click":
-        await page.locator(str(step["selector"])).click(timeout=timeout)
+        locator = page.locator(str(step["selector"]))
+        if index is not None:
+            locator = locator.nth(int(index))
+        await locator.click(timeout=timeout)
     elif action == "fill":
         await page.locator(str(step["selector"])).fill(str(step["value"]), timeout=timeout)
     elif action == "wait":

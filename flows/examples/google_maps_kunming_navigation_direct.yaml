@@ -1,0 +1,44 @@
+name: "Google Maps 直接搜索昆明并创建导航"
+description: "直接打开 Google Maps，搜索昆明并点击路线。这个版本用于自动化稳定性测试。"
+browser:
+  headless: true
+  slow_mo: 100
+  storage_state: ""
+variables:
+  maps_url: "https://www.google.com/maps?hl=zh-CN"
+  destination: "昆明"
+steps:
+  - action: goto
+    description: "直接打开 Google Maps"
+    url: "${maps_url}"
+    timeout: 30000
+
+  - action: wait
+    description: "等待地图搜索框出现"
+    selector: "input[role='combobox']"
+    timeout: 30000
+
+  - action: fill
+    description: "输入昆明"
+    selector: "input[role='combobox']"
+    value: "${destination}"
+    timeout: 15000
+
+  - action: click
+    description: "点击搜索按钮"
+    selector: "button[aria-label='搜索']"
+    timeout: 15000
+
+  - action: sleep
+    description: "等待地图结果加载"
+    seconds: 5
+
+  - action: click
+    description: "点击路线，创建导航"
+    selector: "button[aria-label='路线']"
+    index: 0
+    timeout: 15000
+
+  - action: screenshot
+    description: "保存导航截图"
+    path: "logs/google-maps-kunming-direct.png"
