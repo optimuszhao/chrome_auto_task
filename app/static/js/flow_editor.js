@@ -199,6 +199,22 @@ document.querySelector('#runFlowBtn').addEventListener('click', async () => {
   const data = await requestJson(`/api/flows/${els.flowId.value}/run`, { method: 'POST' });
   location.href = `/runs/${data.run_id}`;
 });
+document.addEventListener('click', (event) => {
+  const button = event.target.closest('.help-btn');
+  if (!button) return;
+  event.preventDefault();
+  const owner = button.closest('label') || button.closest('.split-head');
+  let help = owner.querySelector('.help-text');
+  if (help) {
+    help.remove();
+    return;
+  }
+  document.querySelectorAll('.help-text').forEach(item => item.remove());
+  help = document.createElement('div');
+  help.className = 'help-text';
+  help.textContent = button.dataset.help;
+  owner.appendChild(help);
+});
 
 if (!els.yaml.value.trim()) els.yaml.value = jsyaml.dump(defaultFlow(), { lineWidth: -1, noRefs: true });
 yamlToForm();

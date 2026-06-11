@@ -24,28 +24,28 @@
       </div>
     </div>
     <div class="form-grid">
-      <label>任务名称<input id="flowName" value="{{ flow.name if flow else '' }}"></label>
-      <label>任务说明<input id="flowDescription" value="{{ flow.description if flow else '' }}"></label>
-      <label>启用<select id="flowEnabled"><option value="true">是</option><option value="false" {% if flow and not flow.enabled %}selected{% endif %}>否</option></select></label>
-      <label>storage_state<select id="storageState"><option value="">空</option>{% for item in auth_files %}<option>{{ item }}</option>{% endfor %}</select></label>
-      <label>Action<select id="stepAction"></select></label>
-      <label>selector<input id="stepSelector"></label>
-      <label>value<input id="stepValue"></label>
-      <label>url<input id="stepUrl"></label>
-      <label>timeout<input id="stepTimeout" type="number"></label>
-      <label>path<input id="stepPath"></label>
-      <label>message<input id="stepMessage"></label>
-      <label>text<input id="stepText"></label>
-      <label>seconds<input id="stepSeconds" type="number" step="0.1"></label>
-      <label>file_path<input id="stepFilePath"></label>
-      <label>save_as<input id="stepSaveAs"></label>
-      <label class="wide">description<input id="stepDescription"></label>
+      <label><span class="label-line">任务名称 <button type="button" class="help-btn" data-help="给这个自动化任务起一个好认的名字，比如“每日导出销售报表”。">?</button></span><input id="flowName" value="{{ flow.name if flow else '' }}"></label>
+      <label><span class="label-line">任务说明 <button type="button" class="help-btn" data-help="写清楚这个任务做什么、给谁用、什么时候跑。可以留空。">?</button></span><input id="flowDescription" value="{{ flow.description if flow else '' }}"></label>
+      <label><span class="label-line">启用 <button type="button" class="help-btn" data-help="选择“是”表示任务可执行；选择“否”表示先保存配置，暂时停用。">?</button></span><select id="flowEnabled"><option value="true">是</option><option value="false" {% if flow and not flow.enabled %}selected{% endif %}>否</option></select></label>
+      <label><span class="label-line">storage_state <button type="button" class="help-btn" data-help="登录态文件。已经手动登录并保存过账号状态时选择它，后续执行可复用登录状态。">?</button></span><select id="storageState"><option value="">空</option>{% for item in auth_files %}<option>{{ item }}</option>{% endfor %}</select></label>
+      <label><span class="label-line">Action <button type="button" class="help-btn" data-help="这一小步要做的事情。下拉里同时显示中文和英文，保存到 YAML 时使用英文 action。">?</button></span><select id="stepAction"></select></label>
+      <label><span class="label-line">selector <button type="button" class="help-btn" data-help="页面元素定位方式，比如 #loginBtn。优先用 id、data-testid、name。">?</button></span><input id="stepSelector"></label>
+      <label><span class="label-line">value <button type="button" class="help-btn" data-help="要填写或选择的内容，比如用户名、密码、下拉框选项值。支持 ${变量名}。">?</button></span><input id="stepValue"></label>
+      <label><span class="label-line">url <button type="button" class="help-btn" data-help="要打开的网页地址，比如 http://127.0.0.1:8000/mock-site。">?</button></span><input id="stepUrl"></label>
+      <label><span class="label-line">timeout <button type="button" class="help-btn" data-help="最长等待时间，单位毫秒。10000 表示最多等 10 秒。">?</button></span><input id="stepTimeout" type="number"></label>
+      <label><span class="label-line">path <button type="button" class="help-btn" data-help="截图保存路径，比如 logs/demo.png。路径限制在项目目录内。">?</button></span><input id="stepPath"></label>
+      <label><span class="label-line">message <button type="button" class="help-btn" data-help="人工确认时显示给操作人的提示，比如“确认页面金额无误后继续”。">?</button></span><input id="stepMessage"></label>
+      <label><span class="label-line">text <button type="button" class="help-btn" data-help="要在页面上检查的文字，比如“提交成功”。">?</button></span><input id="stepText"></label>
+      <label><span class="label-line">seconds <button type="button" class="help-btn" data-help="固定等待的秒数，比如 2 表示停 2 秒再继续。">?</button></span><input id="stepSeconds" type="number" step="0.1"></label>
+      <label><span class="label-line">file_path <button type="button" class="help-btn" data-help="要上传的本地文件路径，路径限制在项目目录内。">?</button></span><input id="stepFilePath"></label>
+      <label><span class="label-line">save_as <button type="button" class="help-btn" data-help="下载文件保存到哪里，比如 logs/downloads/report.txt。">?</button></span><input id="stepSaveAs"></label>
+      <label class="wide"><span class="label-line">description <button type="button" class="help-btn" data-help="这一步的人类说明，日志里会显示，方便排查失败原因。">?</button></span><input id="stepDescription"></label>
     </div>
   </section>
 </section>
 <section class="panel yaml-panel">
   <div class="split-head">
-    <h2>YAML 编辑模式</h2>
+    <h2>YAML 编辑模式 <button type="button" class="help-btn" data-help="适合直接粘贴完整配置。每个步骤用 action 表示动作，字段按动作填写。保存前会自动校验。">?</button></h2>
     <div class="actions">
       <button id="validateYamlBtn">YAML 校验</button>
       <button id="formatYamlBtn">格式化</button>

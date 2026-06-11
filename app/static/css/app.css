@@ -48,6 +48,28 @@ code { white-space: pre-wrap; word-break: break-word; }
 .step-list li.active { background: #e8eefb; color: var(--primary); font-weight: 600; }
 .form-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: end; }
 label { color: var(--muted); font-size: 13px; display: grid; gap: 6px; }
+.label-line { display: flex; align-items: center; gap: 6px; min-height: 22px; }
+.help-btn {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  padding: 0;
+  border-radius: 50%;
+  justify-content: center;
+  color: var(--primary);
+  border-color: #b7cdf8;
+  background: #eef4ff;
+  font-weight: 700;
+  line-height: 1;
+}
+.help-text {
+  color: #334155;
+  background: #f1f5f9;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 10px;
+  line-height: 1.5;
+}
 input, select, textarea { border: 1px solid var(--line); border-radius: 6px; padding: 9px 10px; min-height: 38px; font: inherit; color: var(--text); background: #fff; }
 textarea { width: 100%; min-height: 360px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; line-height: 1.45; }
 .wide { grid-column: 1 / -1; }
